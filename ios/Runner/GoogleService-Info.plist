@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>430810865556-4ik1qt6cbsq4547irepsq1m2cqa21ng7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.430810865556-4ik1qt6cbsq4547irepsq1m2cqa21ng7</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCJboTF3DMPQt7c9pGWJFmCI16gq8vNVsg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>430810865556</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.guuchiru.chatify</string>
+	<key>PROJECT_ID</key>
+	<string>chatify-54232</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chatify-54232.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:430810865556:ios:3eba9103bb2152294c3981</string>
+	<key>DATABASE_URL</key>
+	<string>https://chatify-54232.firebaseio.com</string>
+</dict>
+</plist>
