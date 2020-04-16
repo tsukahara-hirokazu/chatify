@@ -41,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           _headingWidget(),
           _inputForm(),
+          _loginButton(),
+          _registerButton(),
         ],
       ),
     );
@@ -69,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _inputForm() {
     return Container(
+      height: _deviceheight * 0.16,
       child: Form(
         key: _formKey,
         onChanged: () {},
@@ -76,7 +79,10 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[_emailTextField()],
+          children: <Widget>[
+            _emailTextField(),
+            _passwordTextField(),
+          ],
         ),
       ),
     );
@@ -93,6 +99,62 @@ class _LoginPageState extends State<LoginPage> {
         hintText: "Email Address",
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _passwordTextField() {
+    return TextFormField(
+      autocorrect: false,
+      obscureText: true,
+      style: TextStyle(color: Colors.white),
+      validator: (_input) {},
+      onSaved: (input) {},
+      cursorColor: Colors.white,
+      decoration: InputDecoration(
+        hintText: "Password",
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _loginButton() {
+    return Container(
+      width: _devicewidth,
+      height: _deviceheight * 0.06,
+      child: MaterialButton(
+        color: Colors.blue,
+        onPressed: () {},
+        child: Text(
+          "Login",
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _registerButton() {
+    return GestureDetector(
+      onTap: () {
+        print("Tag the register button!");
+      },
+      child: Container(
+        height: _deviceheight * 0.06,
+        width: _devicewidth,
+        child: Text(
+          "Register",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: Colors.white60,
+          ),
         ),
       ),
     );
