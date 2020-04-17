@@ -28,8 +28,10 @@ class AuthProvider extends ChangeNotifier {
       user = _result.user;
       //Navigate to HomePage
       print("Logged In Successfully on$user");
+      status = AuthStatus.Authenticated;
     } catch (e) {
       status = AuthStatus.Error;
+      print("Login Error");
     }
     notifyListeners();
   }

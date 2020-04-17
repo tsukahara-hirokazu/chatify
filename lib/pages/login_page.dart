@@ -42,7 +42,6 @@ class _LoginPageState extends State<LoginPage> {
     return Builder(
       builder: (BuildContext _context) {
         _auth = Provider.of<AuthProvider>(_context);
-        print(_auth.user);
         return Container(
           padding: EdgeInsets.symmetric(horizontal: _devicewidth * 0.1),
           height: _deviceheight * 0.6,
@@ -153,23 +152,30 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() {
-    return Container(
-      width: _devicewidth,
-      height: _deviceheight * 0.06,
-      child: MaterialButton(
-        color: Colors.blue,
-        onPressed: () {
-          if (_formKey.currentState.validate()) {}
-        },
-        child: Text(
-          "Login",
-          style: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-    );
+    return _auth.status == AuthStatus.Authenticating
+        ? Align(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          )
+        : Container(
+            width: _devicewidth,
+            height: _deviceheight * 0.06,
+            child: MaterialButton(
+              color: Colors.blue,
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  _auth.loginUserWithEmailAndPassword(_email, _password);
+                }
+              },
+              child: Text(
+                "Login",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          );
   }
 
   Widget _registerButton() {
