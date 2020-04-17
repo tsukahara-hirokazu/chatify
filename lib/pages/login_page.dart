@@ -1,4 +1,6 @@
+import 'package:chatify/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class _LoginPageState extends State<LoginPage> {
   double _devicewidth;
 
   GlobalKey<FormState> _formKey;
+  AuthProvider _auth;
 
   String _email;
   String _password;
@@ -27,29 +30,36 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: Align(
         alignment: Alignment.center,
-        child: _loginPageUI(),
+        child: ChangeNotifierProvider<AuthProvider>.value(
+          value: AuthProvider.instance,
+          child: _loginPageUI(),
+        ),
       ),
     );
   }
 
   Widget _loginPageUI() {
-    print(_email);
-    print(_password);
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: _devicewidth * 0.1),
-      height: _deviceheight * 0.6,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _headingWidget(),
-          _inputForm(),
-          _loginButton(),
-          _registerButton(),
-        ],
-      ),
+    return Builder(
+      builder: (BuildContext _context) {
+        _auth = Provider.of<AuthProvider>(_context);
+        print(_auth.user);
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: _devicewidth * 0.1),
+          height: _deviceheight * 0.6,
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _headingWidget(),
+              _inputForm(),
+              _loginButton(),
+              _registerButton(),
+            ],
+          ),
+        );
+      },
     );
   }
 
