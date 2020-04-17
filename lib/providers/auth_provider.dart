@@ -1,3 +1,4 @@
+import 'package:chatify/services/snackbar_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -27,11 +28,11 @@ class AuthProvider extends ChangeNotifier {
           email: _email, password: _password);
       user = _result.user;
       //Navigate to HomePage
-      print("Logged In Successfully on$user");
       status = AuthStatus.Authenticated;
+      SnackBarService.instance.showSnackBarSuccess("ログインしました");
     } catch (e) {
       status = AuthStatus.Error;
-      print("Login Error");
+      SnackBarService.instance.showSnackBarError("ログインに失敗しました");
     }
     notifyListeners();
   }

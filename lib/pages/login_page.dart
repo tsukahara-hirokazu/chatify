@@ -1,4 +1,5 @@
 import 'package:chatify/providers/auth_provider.dart';
+import 'package:chatify/services/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _loginPageUI() {
     return Builder(
       builder: (BuildContext _context) {
+        SnackBarService.instance.buildContext = _context;
         _auth = Provider.of<AuthProvider>(_context);
         return Container(
           padding: EdgeInsets.symmetric(horizontal: _devicewidth * 0.1),
