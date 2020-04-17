@@ -11,6 +11,9 @@ class _LoginPageState extends State<LoginPage> {
 
   GlobalKey<FormState> _formKey;
 
+  String _email;
+  String _password;
+
   _LoginPageState() {
     _formKey = GlobalKey<FormState>();
   }
@@ -30,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginPageUI() {
+    print(_email);
+    print(_password);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: _devicewidth * 0.1),
       height: _deviceheight * 0.6,
@@ -71,10 +76,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _inputForm() {
     return Container(
-      height: _deviceheight * 0.16,
+      height: _deviceheight * 0.20,
       child: Form(
         key: _formKey,
-        onChanged: () {},
+        onChanged: () {
+          _formKey.currentState.save(); //Todo
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
@@ -92,8 +99,16 @@ class _LoginPageState extends State<LoginPage> {
     return TextFormField(
       autocorrect: false,
       style: TextStyle(color: Colors.white),
-      validator: (_input) {},
-      onSaved: (_input) {},
+      validator: (_input) {
+        return _input.length != 0 && _input.contains("@")
+            ? null
+            : "適切なメールアドレスを入力してください";
+      },
+      onSaved: (_input) {
+        setState(() {
+          _email = _input;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "Email Address",
@@ -109,8 +124,14 @@ class _LoginPageState extends State<LoginPage> {
       autocorrect: false,
       obscureText: true,
       style: TextStyle(color: Colors.white),
-      validator: (_input) {},
-      onSaved: (input) {},
+      validator: (_input) {
+        return _input.length != 0 ? null : "適切なパスワードを入力してください";
+      },
+      onSaved: (_input) {
+        setState(() {
+          _password = _input;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "Password",
@@ -127,7 +148,9 @@ class _LoginPageState extends State<LoginPage> {
       height: _deviceheight * 0.06,
       child: MaterialButton(
         color: Colors.blue,
-        onPressed: () {},
+        onPressed: () {
+          if (_formKey.currentState.validate()) {}
+        },
         child: Text(
           "Login",
           style: TextStyle(
