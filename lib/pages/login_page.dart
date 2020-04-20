@@ -1,4 +1,5 @@
 import 'package:chatify/providers/auth_provider.dart';
+import 'package:chatify/services/navigation_service.dart';
 import 'package:chatify/services/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -183,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _registerButton() {
     return GestureDetector(
       onTap: () {
-        print("Tag the register button!");
+        NavigationService.instance.navigationToPage("register");
       },
       child: Container(
         height: _deviceheight * 0.06,
