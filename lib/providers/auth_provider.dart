@@ -29,7 +29,7 @@ class AuthProvider extends ChangeNotifier {
       user = _result.user;
       //Navigate to HomePage
       status = AuthStatus.Authenticated;
-      SnackBarService.instance.showSnackBarSuccess("ログインしました");
+      SnackBarService.instance.showSnackBarSuccess("ログインに成功しました");
     } catch (e) {
       status = AuthStatus.Error;
       SnackBarService.instance.showSnackBarError("ログインに失敗しました");

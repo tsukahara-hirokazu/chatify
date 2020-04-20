@@ -1,4 +1,4 @@
-import 'package:chatify/pages/login_page.dart';
+import 'package:chatify/pages/registration_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         accentColor: Color.fromRGBO(42, 117, 188, 1),
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       ),
-      home: LoginPage(),
+      home: RegistrationPage(),
     );
   }
 }
