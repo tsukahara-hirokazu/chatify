@@ -17,7 +17,7 @@ class DBService {
       return await _db.collection(_userCollection).document(_uid).setData({
         "name": _name,
         "email": _email,
-        "password": _imageURL,
+        "image": _imageURL,
         "lastSeen": DateTime.now(),
       });
     } catch (e) {

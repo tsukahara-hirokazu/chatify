@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         "login": (BuildContext context) => LoginPage(),
         "register": (BuildContext context) => RegistrationPage(),
       },
-      home: RegistrationPage(),
     );
   }
 }

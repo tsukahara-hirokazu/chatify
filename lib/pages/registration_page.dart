@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:chatify/providers/auth_provider.dart';
+import 'package:chatify/services/cloud_storage_service.dart';
+import 'package:chatify/services/db_service.dart';
 import 'package:chatify/services/media_service.dart';
 import 'package:chatify/services/navigation_service.dart';
+import 'package:chatify/services/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,16 +44,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
           alignment: Alignment.center,
           child: ChangeNotifierProvider<AuthProvider>.value(
             value: AuthProvider.instance,
-            child: _registrationPageUI(),
+            child: registrationPageUI(),
           ),
         ),
       ),
     );
   }
 
-  Widget _registrationPageUI() {
+  Widget registrationPageUI() {
     return Builder(
       builder: (BuildContext _context) {
+        SnackBarService.instance.buildContext = _context;
         _auth = Provider.of<AuthProvider>(_context);
         return Container(
           height: _deviceHeight * 0.75,
@@ -213,18 +217,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget _registerButton() {
-    return Container(
-      height: _deviceHeight * 0.06,
-      width: _deviceWidth,
-      child: MaterialButton(
-        onPressed: () {},
-        color: Colors.blue,
-        child: Text(
-          "会員登録",
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-        ),
-      ),
-    );
+    print(_email);
+    print(_password);
+    return _auth.status != AuthStatus.Authenticating
+        ? Container(
+            height: _deviceHeight * 0.06,
+            width: _deviceWidth,
+            child: MaterialButton(
+              onPressed: () {
+                if (_formKey.currentState.validate() && _image != null) {
+                  _auth.registerUserWithEmailAndPassword(_email, _password,
+                      (String _uid) async {
+                    var _result = await CloudStorageService.instance
+                        .uploadUserImage(_uid, _image);
+                    var _imageURL = await _result.ref.getDownloadURL();
+                    await DBService.instance
+                        .createUserInDB(_uid, _name, _email, _imageURL);
+                  });
+                }
+              },
+              color: Colors.blue,
+              child: Text(
+                "会員登録",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+              ),
+            ),
+          )
+        : Align(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          );
   }
 
   Widget _backToLoginButton() {

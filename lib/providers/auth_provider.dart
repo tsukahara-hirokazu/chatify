@@ -12,10 +12,11 @@ enum AuthStatus {
 }
 
 class AuthProvider extends ChangeNotifier {
-  static AuthProvider instance = AuthProvider();
   FirebaseAuth _auth;
   AuthStatus status;
   FirebaseUser user;
+
+  static AuthProvider instance = AuthProvider();
 
   AuthProvider() {
     _auth = FirebaseAuth.instance;
@@ -28,7 +29,6 @@ class AuthProvider extends ChangeNotifier {
       AuthResult _result = await _auth.signInWithEmailAndPassword(
           email: _email, password: _password);
       user = _result.user;
-      //Navigate to HomePage
       status = AuthStatus.Authenticated;
       SnackBarService.instance.showSnackBarSuccess("ログインに成功しました");
       // TODO Update LastSeen Time
@@ -50,11 +50,12 @@ class AuthProvider extends ChangeNotifier {
       user = _result.user;
       status = AuthStatus.Authenticated;
       await onSuccess(user.uid);
+
       SnackBarService.instance.showSnackBarSuccess("会員登録に成功しました");
-      // TODO Update LastSeen Time
+
       NavigationService.instance.goBack();
-      // TODO Navigate to HomePage
     } catch (e) {
+      print(e);
       status = AuthStatus.Error;
       user = null;
       SnackBarService.instance.showSnackBarError("会員登録に失敗しました");
