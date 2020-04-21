@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:chatify/providers/auth_provider.dart';
 import 'package:chatify/services/media_service.dart';
 import 'package:chatify/services/navigation_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -21,6 +23,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String _email;
   String _password;
 
+  AuthProvider _auth;
+
   _RegistrationPageState() {
     _formKey = GlobalKey<FormState>();
   }
@@ -35,27 +39,35 @@ class _RegistrationPageState extends State<RegistrationPage> {
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
           alignment: Alignment.center,
-          child: _registrationPageUI(),
+          child: ChangeNotifierProvider<AuthProvider>.value(
+            value: AuthProvider.instance,
+            child: _registrationPageUI(),
+          ),
         ),
       ),
     );
   }
 
   Widget _registrationPageUI() {
-    return Container(
-      height: _deviceHeight * 0.75,
-      padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.1),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _headingWidget(),
-          _inputForm(),
-          _registerButton(),
-          _backToLoginButton(),
-        ],
-      ),
+    return Builder(
+      builder: (BuildContext _context) {
+        _auth = Provider.of<AuthProvider>(_context);
+        return Container(
+          height: _deviceHeight * 0.75,
+          padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.1),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _headingWidget(),
+              _inputForm(),
+              _registerButton(),
+              _backToLoginButton(),
+            ],
+          ),
+        );
+      },
     );
   }
 
