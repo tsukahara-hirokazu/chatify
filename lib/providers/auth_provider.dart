@@ -32,9 +32,10 @@ class AuthProvider extends ChangeNotifier {
       status = AuthStatus.Authenticated;
       SnackBarService.instance.showSnackBarSuccess("ログインに成功しました");
       // TODO Update LastSeen Time
-      // TODO Navigate to HomePage
+      NavigationService.instance.navigationToReplacement("home");
     } catch (e) {
       status = AuthStatus.Error;
+      user = null;
       SnackBarService.instance.showSnackBarError("ログインに失敗しました");
     }
     notifyListeners();
@@ -52,8 +53,8 @@ class AuthProvider extends ChangeNotifier {
       await onSuccess(user.uid);
 
       SnackBarService.instance.showSnackBarSuccess("会員登録に成功しました");
-
       NavigationService.instance.goBack();
+      NavigationService.instance.navigationToReplacement("home");
     } catch (e) {
       print(e);
       status = AuthStatus.Error;
