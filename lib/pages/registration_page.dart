@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:chatify/services/media_service.dart';
 import 'package:chatify/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   double _deviceHeight;
 
   GlobalKey<FormState> _formKey;
+
+  File image;
 
   _RegistrationPageState() {
     _formKey = GlobalKey<FormState>();
@@ -97,15 +102,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget _imageSelectorWidget() {
     return Align(
       alignment: Alignment.center,
-      child: Container(
-        height: _deviceHeight * 0.1,
-        width: _deviceHeight * 0.1,
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(500),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage("https://dic.nicovideo.jp/oekaki/334039.png"),
+      child: GestureDetector(
+        onTap: () async {
+          File _imageFile = await MediaService.instance.getImageFromLibrary();
+          setState(() {
+            image = _imageFile;
+          });
+        },
+        child: Container(
+          height: _deviceHeight * 0.1,
+          width: _deviceHeight * 0.1,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(500),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: image != null
+                  ? FileImage(image)
+                  : NetworkImage("https://dic.nicovideo.jp/oekaki/334039.png"),
+            ),
           ),
         ),
       ),
