@@ -15,7 +15,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   GlobalKey<FormState> _formKey;
 
-  File image;
+  File _image;
+
+  String _name;
+  String _email;
+  String _password;
 
   _RegistrationPageState() {
     _formKey = GlobalKey<FormState>();
@@ -106,7 +110,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         onTap: () async {
           File _imageFile = await MediaService.instance.getImageFromLibrary();
           setState(() {
-            image = _imageFile;
+            _image = _imageFile;
           });
         },
         child: Container(
@@ -117,8 +121,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             borderRadius: BorderRadius.circular(500),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: image != null
-                  ? FileImage(image)
+              image: _image != null
+                  ? FileImage(_image)
                   : NetworkImage("https://dic.nicovideo.jp/oekaki/334039.png"),
             ),
           ),
@@ -134,7 +138,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
       validator: (_input) {
         return _input.length != 0 ? null : "名前を入力してください";
       },
-      onSaved: (_input) {},
+      onSaved: (_input) {
+        setState(() {
+          _name = _input;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "名前",
@@ -154,7 +162,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ? null
             : "適切なメールアドレスを入力してください";
       },
-      onSaved: (_input) {},
+      onSaved: (_input) {
+        setState(() {
+          _email = _input;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "メールアドレス",
@@ -173,7 +185,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
       validator: (_input) {
         return _input.length != 0 ? null : "適切なパスワードを入力してください";
       },
-      onSaved: (_input) {},
+      onSaved: (_input) {
+        setState(() {
+          _password = _input;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "パスワード",
